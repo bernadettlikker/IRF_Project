@@ -16,5 +16,10 @@ namespace US_Real_Fake_news_election
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
