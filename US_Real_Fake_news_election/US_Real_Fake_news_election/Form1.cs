@@ -15,6 +15,9 @@ namespace US_Real_Fake_news_election
         public Form1()
         {
             InitializeComponent();
+            TimeBox USTimeBox = new TimeBox();
+            Controls.Add(USTimeBox);
+            USTimeBox.Start();
         }
 
         private void Form1_Load(object sender, EventArgs e)
