@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,9 @@ namespace US_Real_Fake_news_election
             Label = (string)row.Element("label");
         }
     }
-    class TimeBox
+    class TimeBox : GroupBox
     {
-        TimeBox : GroupBox
-        
+                
         private readonly USDateTime UsEastTime = new USDateTime(TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
         private readonly USDateTime UsPacificTime = new USDateTime(TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
         public Timer UsTimer { set; get; }
@@ -77,6 +77,7 @@ namespace US_Real_Fake_news_election
             Controls.Add(label2);
             Controls.Add(label_east_coast);
             Controls.Add(label_pacific);
+            
             Left = 5;
             Top = 5;
             Width = 210;
