@@ -6,6 +6,20 @@ using System.Threading.Tasks;
 
 namespace US_Real_Fake_news_election
 {
+    class News
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public string Label { get; set; }
+        public News(XElement row)
+        {
+            Id = (int)row.Element("id");
+            Title = (string)row.Element("title");
+            Text = (string)row.Element("text");
+            Label = (string)row.Element("label");
+        }
+    }
     class TimeBox
     {
         TimeBox : GroupBox
