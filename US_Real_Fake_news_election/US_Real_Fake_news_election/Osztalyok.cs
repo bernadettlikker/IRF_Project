@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace US_Real_Fake_news_election
 {
@@ -23,7 +24,7 @@ namespace US_Real_Fake_news_election
     class TimeBox
     {
         TimeBox : GroupBox
-    {
+        
         private readonly USDateTime UsEastTime = new USDateTime(TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
         private readonly USDateTime UsPacificTime = new USDateTime(TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
         public Timer UsTimer { set; get; }
@@ -36,6 +37,7 @@ namespace US_Real_Fake_news_election
             };
             timer.Tick += OnTimedEvent;
             UsTimer = timer;
+
             Label label1 = new Label
             {
                 Top = 20,
@@ -43,6 +45,7 @@ namespace US_Real_Fake_news_election
                 Width = 70,
                 Text = "East Coast:"
             };
+
             Label label_east_coast = new Label
             {
                 Top = 20,
@@ -52,6 +55,7 @@ namespace US_Real_Fake_news_election
                 Text = Convert.ToString(UsEastTime.LocalTime)
 
             };
+
             Label label2 = new Label
             {
                 Top = 45,
@@ -59,6 +63,7 @@ namespace US_Real_Fake_news_election
                 Width = 70,
                 Text = "Pacific:"
             };
+
             Label label_pacific = new Label
             {
                 Top = 45,
