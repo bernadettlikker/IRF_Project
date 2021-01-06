@@ -50,6 +50,25 @@ namespace US_Real_Fake_news_election
             dataGridView1.DataSource = NewsList.ToList();
         }
 
+        private void ButtonExport_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK && saveFileDialog1.FileName != "")
+            {
+                try
+                {
+                    CSV_file output_file = new CSV_file(saveFileDialog1.FileName);
+                    output_file.Add_row(News.CsvHeader());
+                    foreach (News news in NewsList)
+                        output_file.Add_row(news.ToList());
+                    output_file.Save();
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message);
+                }
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 

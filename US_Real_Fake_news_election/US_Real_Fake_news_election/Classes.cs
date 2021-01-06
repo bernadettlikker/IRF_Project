@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -20,6 +21,29 @@ namespace US_Real_Fake_news_election
             Title = (string)row.Element("title");
             Text = (string)row.Element("text");
             Label = (string)row.Element("label");
+        }
+
+        public static List<string> CsvHeader()
+        {
+            List<string> rowData = new List<string>
+            {
+                "Id",
+                "Title",
+                "Text",
+                "Label"
+            };
+            return rowData;
+        }
+        public List<string> ToList()
+        {
+            List<string> rowData = new List<string>
+            {
+                Convert.ToString(Id),
+                Title,
+                Text,
+                Label
+            };
+            return rowData;
         }
     }
     class TimeBox : GroupBox
@@ -209,6 +233,31 @@ namespace US_Real_Fake_news_election
             }
 
         }
-    } 
+
+    class CSV_file
+    {
+        public StreamWriter SW;
+        public string File_name;
+        public string delimiter = ";";
+        public CSV_file(string file_name)
+        {
+            File_name = file_name;
+            SW = File.CreateText(File_name);
+        }
+        public void Add_row(List<string> row)
+        {
+            string csv_row = "";
+            foreach (string item in row)
+                csv_row += item + delimiter;
+            csv_row = csv_row.Remove(csv_row.Length - 1);
+            SW.WriteLine(csv_row);
+        }
+        public void Save()
+        {
+            SW.Close();
+        }
+    }
+
+} 
 
 
