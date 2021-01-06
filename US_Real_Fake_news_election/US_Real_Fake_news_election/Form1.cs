@@ -14,11 +14,16 @@ namespace US_Real_Fake_news_election
     public partial class Form1 : Form
     {
         readonly List<News> NewsList = new List<News>();
+        private readonly FilterBox Filter;
+        private XElement NewsDocument;
+
         public Form1()
         {
             InitializeComponent();
             TimeBox USTimeBox = new TimeBox();
+            Filter = new FilterBox();
             Controls.Add(USTimeBox);
+            Controls.Add(Filter);
             USTimeBox.Start();
         }
 
@@ -27,20 +32,22 @@ namespace US_Real_Fake_news_election
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                XElement newsList = XElement.Load(openFileDialog1.FileName);
-                IEnumerable<XElement> news =
-                    from element in newsList.Elements()
-                    select element;
-                foreach (XElement x in news)
-                {
-                    News MyNews = new News(x);
-                    NewsList.Add(MyNews);
-                }
-
-                dataGridView1.DataSource = NewsList.ToList();
+                NewsDocument = XElement.Load(openFileDialog1.FileName);
+                ButtonQuery_Click(sender, e);
             }
             else
                 MessageBox.Show("Fájl kiválasztása szükséges!");
+        }
+        private void ButtonQuery_Click(object sender, EventArgs e)
+        {
+            NewsList.Clear();
+            IEnumerable<XElement> news = Filter.FilteredData(NewsDocument);
+            foreach (XElement x in news)
+            {
+                News MyNews = new News(x);
+                NewsList.Add(MyNews);
+            }
+            dataGridView1.DataSource = NewsList.ToList();
         }
 
         private void Form1_Load(object sender, EventArgs e)

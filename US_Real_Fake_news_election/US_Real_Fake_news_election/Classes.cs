@@ -78,8 +78,8 @@ namespace US_Real_Fake_news_election
             Controls.Add(label_east_coast);
             Controls.Add(label_pacific);
             
-            Left = 5;
-            Top = 5;
+            Left = 10;
+            Top = 10;
             Width = 210;
             Height = 70;
             Text = "US Local Time";
@@ -115,5 +115,98 @@ namespace US_Real_Fake_news_election
             }
         }
     }
-}
+
+    class FilterBox : GroupBox
+    {
+        private readonly RadioButton rbFakeNews;
+        private readonly RadioButton rbRealNews;
+        private readonly CheckBox cbAllNews;
+        private readonly TextBox textBox;
+        public string QueryString { get; set; }
+        public string Query()
+        {
+            return "";
+        }
+
+        public FilterBox()
+        {
+            Text = "Filters";
+            Width = 255;
+            Height = 110;
+            Left = 300;
+            Top = 10;
+            Label labelFilter = new Label
+            {
+                Left = 10,
+                Top = 35,
+                Text = "Filter",
+                Width = 30
+            };
+            textBox = new TextBox
+            {
+                Left = 45,
+                Top = 30,
+                Width = 200
+            };
+            cbAllNews = new CheckBox
+            {
+                Left = 10,
+                Top = 75,
+                Text = "All News",
+                Checked = true,
+                Width = 70
+            };
+            rbFakeNews = new RadioButton
+            {
+                Left = 85,
+                Top = 75,
+                Text = "Fake News",
+                Width = 80,
+                Enabled = false
+            };
+            rbRealNews = new RadioButton
+            {
+                Left = 165,
+                Top = 75,
+                Text = "Real News",
+                Width = 80,
+                Enabled = false
+            };
+            cbAllNews.CheckedChanged += CbAllNew_CheckedChanged;
+            Controls.Add(labelFilter);
+            Controls.Add(textBox);
+            Controls.Add(cbAllNews);
+            Controls.Add(rbFakeNews);
+            Controls.Add(rbRealNews);
+
+            private void CbAllNew_CheckedChanged(object sender, EventArgs e)
+            {
+                rbFakeNews.Enabled = (sender as CheckBox).CheckState == CheckState.Unchecked;
+                rbRealNews.Enabled = (sender as CheckBox).CheckState == CheckState.Unchecked;
+            }
+
+            public IEnumerable<XElement> FilteredData(XElement data)
+            {
+                IEnumerable<XElement> Data = null;
+                if (textBox.Text == "" && cbAllNews.Checked)
+                    Data = from element in data.Elements() select element;
+                else
+                {
+                    if (cbAllNews.Checked)
+                        Data = from element in data.Elements()
+                               where ((string)element.Element("title")).Contains(textBox.Text)
+                               select element;
+                    else
+                    {
+                        Data = from element in data.Elements()
+                               where ((string)element.Element("title")).Contains(textBox.Text) &&
+                               (string)element.Element("label") == (rbFakeNews.Checked ? "FAKE" : "REAL")
+                               select element;
+                    }
+                }
+                return Data;
+            }
+
+        }
+    }
 
