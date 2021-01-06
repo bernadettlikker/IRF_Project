@@ -61,12 +61,15 @@ namespace US_Real_Fake_news_election
                     foreach (News news in NewsList)
                         output_file.Add_row(news.ToList());
                     output_file.Save();
+                    MessageBox.Show("Saved Successfuly");
                 }
                 catch (Exception err)
                 {
                     MessageBox.Show(err.Message);
                 }
             }
+
+          
         }
 
         private void Form1_Load(object sender, EventArgs e)
