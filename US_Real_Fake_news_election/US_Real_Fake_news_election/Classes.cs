@@ -24,7 +24,7 @@ namespace US_Real_Fake_news_election
     }
     class TimeBox : GroupBox
     {
-                
+
         private readonly USDateTime UsEastTime = new USDateTime(TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
         private readonly USDateTime UsPacificTime = new USDateTime(TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
         public Timer UsTimer { set; get; }
@@ -77,7 +77,7 @@ namespace US_Real_Fake_news_election
             Controls.Add(label2);
             Controls.Add(label_east_coast);
             Controls.Add(label_pacific);
-            
+
             Left = 10;
             Top = 10;
             Width = 210;
@@ -116,7 +116,7 @@ namespace US_Real_Fake_news_election
         }
     }
 
-    class FilterBox : GroupBox
+    class Classes : GroupBox
     {
         private readonly RadioButton rbFakeNews;
         private readonly RadioButton rbRealNews;
@@ -128,7 +128,7 @@ namespace US_Real_Fake_news_election
             return "";
         }
 
-        public FilterBox()
+        public Classes()
         {
             Text = "Filters";
             Width = 255;
@@ -178,14 +178,14 @@ namespace US_Real_Fake_news_election
             Controls.Add(cbAllNews);
             Controls.Add(rbFakeNews);
             Controls.Add(rbRealNews);
-
+        }
             private void CbAllNew_CheckedChanged(object sender, EventArgs e)
             {
                 rbFakeNews.Enabled = (sender as CheckBox).CheckState == CheckState.Unchecked;
                 rbRealNews.Enabled = (sender as CheckBox).CheckState == CheckState.Unchecked;
             }
 
-            public IEnumerable<XElement> FilteredData(XElement data)
+             public IEnumerable<XElement> FilteredData(XElement data)
             {
                 IEnumerable<XElement> Data = null;
                 if (textBox.Text == "" && cbAllNews.Checked)
@@ -204,9 +204,11 @@ namespace US_Real_Fake_news_election
                                select element;
                     }
                 }
+
                 return Data;
             }
 
         }
-    }
+    } 
+
 

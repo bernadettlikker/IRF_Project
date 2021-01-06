@@ -14,14 +14,14 @@ namespace US_Real_Fake_news_election
     public partial class Form1 : Form
     {
         readonly List<News> NewsList = new List<News>();
-        private readonly FilterBox Filter;
+        private readonly Classes Filter;
         private XElement NewsDocument;
 
         public Form1()
         {
             InitializeComponent();
             TimeBox USTimeBox = new TimeBox();
-            Filter = new FilterBox();
+            Filter = new Classes();
             Controls.Add(USTimeBox);
             Controls.Add(Filter);
             USTimeBox.Start();
